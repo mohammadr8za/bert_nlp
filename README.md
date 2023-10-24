@@ -4,7 +4,9 @@ BERT is the state of the art Embedding algorithm in Natural Language Processing 
 
 Let's divide BERT into three subsections and describe each of them in detail.
 
-## 1. Tokenization: In the first step of every NLP project, raw text must be tokenized (splitted into words). Every algorithm has its own way of tokenization. In BERT, this process forms by splitting sentences into words and then subwords if required. For instance, consider the sentence below: 
+## 1. Tokenization: 
+
+In the first step of every NLP project, raw text must be tokenized (splitted into words). Every algorithm has its own way of tokenization. In BERT, this process forms by splitting sentences into words and then subwords if required. For instance, consider the sentence below: 
 
 **"Hello, how are you?"**
 
