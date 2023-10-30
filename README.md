@@ -62,6 +62,60 @@ Embedding means transforming tokens into the numerical represenation for further
 
 In this section, we aim to utilize BERT, its pre-trained BASE version, for the task of sentiment analysis. We will use the abovementioned information, define a network with pretrained bert (from transformers library) as its core and fine-tune it for sentiment analysis/classification. Let's code and detail each section if require. 
 
+## Step 1: Load Data
+
+```
+import pandas as pd
+
+df = pd.read_csv('/content/sentiment_train.xls')
+df.head(3)
+
+```
+
+## Step 2: Split Data into Train, Validation, and Test Sets
+
+```
+from sklearn.model_selection import train_test_split
+import pandas as pd
+
+X, y = df['sentence'].tolist(), df['label'].tolist()
+print(f"sample sentence and its corresponding label are presented below: \n{X[0], y[0]}")
+
+# we set random_state=1 for this tutorial to make sure we get the same split in each execution of the code (for the sake of consistency)
+X_train, X_test_valid, y_train, y_test_valid = train_test_split(X, y, test_size=0.4, random_state=1)
+
+X_valid, X_test, y_valid, y_test = train_test_split(X_test_valid, y_test_valid, test_size=0.3, random_state=1)
+
+# Write Train, Valid, and Test CSV annotations
+train_dict = {'sentence': X_train, 'label': y_train}
+train_df = pd.DataFrame(train_dict)
+train_df.to_csv(r'/content/train.csv')
+
+valid_dict = {'sentence': X_valid, 'label': y_valid}
+valid_df = pd.DataFrame(valid_dict)
+valid_df.to_csv(r'/content/valid.csv')
+
+test_dict = {'sentence': X_test, 'label': y_test}
+test_df = pd.DataFrame(test_dict)
+test_df.to_csv(r'/content/test.csv')
+
+```
+
+## Step 3: Load BERT Model and its Tokenizer from *transformers* Library
+
+```
+!pip install transformers
+
+from transformers import AutoModel, BertTokenizerFast
+
+bert = AutoModel.from_pretrained('bert-base-uncased')
+tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
+
+```
+
+
+
+
 
 
 
