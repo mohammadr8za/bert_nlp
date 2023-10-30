@@ -255,7 +255,18 @@ def accuracy_fn(pred, true):
 
 ```
 
-## Step 11: Define a Training Loop
+## Step 11: Device Diagnostic Code
+
+
+```
+import torch
+
+device = 'cuda' is torch.cuda.is_available() else 'cpu'
+
+```
+
+
+## Step 12: Define a Training Loop
 
 ```
 from sklearn.metrics import confusion_matrix
