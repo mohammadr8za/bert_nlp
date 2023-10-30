@@ -51,14 +51,14 @@ BERT tokenizer also defines an attention mask. This mask aims to tell the networ
 
 
 
-### Embedding
+## 3. Embedding
 
 Embedding means transforming tokens into the numerical represenation for further computations (feeding to the network). BERT first converts input tokens into IDs, as mentioned earlier. In the next step, these IDs are transformed into their corresponding dense vector representations (using pre-trained Word2Vec embeddings). Then inputs are ready to be utilized for any specific task.
 
 **NOTE:** Other than the <CLS> class token, there is another specific tokens <SEP> that separates sentences in the input sequence. Its existence improves the embedding results by letting network understand the ending and beginning of sentences in the input.
 
 
-## 3. Fine-Tuning BERT for Sentiment Analysis/Classification
+## 4. Fine-Tuning BERT for Sentiment Analysis/Classification
 
 In this section, we aim to utilize BERT, its pre-trained BASE version, for the task of sentiment analysis. We will use the abovementioned information, define a network with pretrained bert (from transformers library) as its core and fine-tune it for sentiment analysis/classification.  
 
