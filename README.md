@@ -261,7 +261,7 @@ def accuracy_fn(pred, true):
 ```
 import torch
 
-device = 'cuda' is torch.cuda.is_available() else 'cpu'
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 ```
 
