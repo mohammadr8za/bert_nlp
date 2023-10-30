@@ -1,4 +1,4 @@
-# Bidirectional Encoder Representations from Transformers (BERT
+# Bidirectional Encoder Representations from Transformers (BERT)
 
 ![LGIlP](https://github.com/mohammadr8za/bert_nlp/assets/72736177/a7bcfd5f-6417-43ca-a260-961436741e04)
 
