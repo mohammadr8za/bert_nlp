@@ -8,9 +8,10 @@ Let's detail BERT.
 
 ![LGIlP](https://github.com/mohammadr8za/bert_nlp/assets/72736177/a7bcfd5f-6417-43ca-a260-961436741e04)
 
-
+<p align="justify">
 BERT is an attention-based network introduced by Google researchers for the embedding task in Natural Language Processing. BERT is introduced in two particular versions, BASE and LARGE. The difference, as the names suggest is in the number of layers in the network architecture (network size). BASE version comprises 12 attention-based encoder layers, 512 hidden units and 12 attention heads. Dimension of embedded tokens in the output is 768 (110M parameters). However, BERT's LARGE version includes 24 attention-based encoder layers, with 512 hidden units and 16 attention heads. Moreover, its embedding size in 1024 (345M parameters). In both versions, maximum length of the input sequence is 512 (equal to the number of hidden units) and first token for both is the <CLS> that represents class token (it is stacked in the beginning of the input sequence, and its embedded corresponding is the first embedded output). In the output, we get the embeddings of tokens and the class embedding that can be used for tasks like sentiment analysis which falls within classification, Q-A, and Named Entity Recognition (NER). 
-
+</p>
+  
 **Q) How to train?** BERT is challenging to train. It is a large network with a lot of attention encoder layers and subsequently requires a large dataset for training. Text datasets are mainly challenging to be handled, too, as they need to be specifically labeled for each task. So, it is always recommended to utilize the pre-trained versions of BERT. In order to adopt BERT architecture and embeddings in any particular task, we may add layers in the output of this architecture and transfer its learned features to our specific task (freeze bert before the definition of our model and use it as the core of our architecture).  
 
 ## 2. Tokenization: 
