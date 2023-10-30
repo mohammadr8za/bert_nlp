@@ -101,7 +101,56 @@ test_df.to_csv(r'/content/test.csv')
 
 ```
 
-## Step 3: Load BERT Model and its Tokenizer from *transformers* Library
+## Step 3: Evaluate Length of Train Data Using Histogram
+
+```
+import matplotlib.pyplot as plt
+
+train_len = [len(text.split()) for text in X_train]
+plt.hist(train_len)
+
+```
+
+## Step 4: Define a Custom Dataset
+
+```
+import torch
+from torch import nn
+
+for param in bert.parameters():
+  param.requires_grad = False
+
+
+class BERTArchitecture(nn.Module):
+
+  def __init__(self, base, num_classes: int=2):
+
+    super(BERTArchitecture, self).__init__()
+
+    self.bert = bert
+
+    self.classifier = nn.Sequential(
+        nn.Linear(in_features=768, out_features=512),
+        nn.ReLU(),
+        nn.Linear(in_features=512, out_features=128),
+        nn.ReLU(),
+        nn.Linear(in_features=128, out_features=num_classes)
+    )
+
+  def forward(self, sent_id, mask):
+
+    _, cls_hs = self.bert(sent_id, attention_mask=mask, return_dict=False)
+
+    # x = self.relu(cls_hs)
+
+    x = self.classifier(cls_hs)
+
+    return x
+
+```
+
+
+## Step 5: Load BERT Model and its Tokenizer from *transformers* Library
 
 ```
 !pip install transformers
@@ -112,6 +161,10 @@ bert = AutoModel.from_pretrained('bert-base-uncased')
 tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
 
 ```
+
+## Step 6: Define Model
+
+
 
 
 
