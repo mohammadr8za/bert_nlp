@@ -233,9 +233,125 @@ batch, mask, labels, len(train_dataloader)
 
 ```
 
+## Step 9: Define Optimizer and Loss Function
+
+```
+import torch
+from torch import nn
+
+loss_fn = nn.CrossEntropyLoss()
+optimzier = torch.optim.Adam(params=model.parameters(), lr=1e-03)
+
+```
+
+## Step 10: Define an Accuracy Function
+
+```
+def accuracy_fn(pred, true):
+
+  count = torch.sum(pred == true)
+
+  return (count/pred.shape[0]) * 100
+
+```
+
+## Step 11: Define a Training Loop
+
+```
+from sklearn.metrics import confusion_matrix
+import seaborn as sn
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
 
+Epochs = 4
 
+train_loss, train_acc = [], []
+valid_loss, valid_acc = [], []
+for epoch in range(Epochs):
+
+  print(f">>>>>>>>>>\tEpoch: {epoch+1}\t<<<<<<<<<<")
+
+  true_labels, pred_labels = [], []  # for confusion matrix
+
+  model.train()
+
+  loss_t, acc_t = 0, 0
+  for b_count, batch in enumerate(train_dataloader):
+
+    sent_id, attention_mask, labels = batch
+    sent_id, attention_mask, labels = sent_id.to(device), attention_mask.to(device), labels.to(device)
+
+    model.zero_grad()
+
+    preds = model(sent_id, attention_mask)
+
+    loss = loss_fn(preds, labels)
+
+    loss_t += loss
+
+    acc = accuracy_fn(preds.argmax(dim=1), labels)
+    acc_t += acc
+
+    optimzier.zero_grad()
+    loss.backward()
+    torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+    optimzier.step()
+
+    if (b_count + 1) % 500 == 0:
+      print(f">>>>>>> batch: loss: {loss}\tacc: {acc}")
+
+  loss_t /= len(train_dataloader)
+  acc_t /= len(train_dataloader)
+
+  model.eval()
+
+  loss_v, acc_v = 0, 0
+  with torch.inference_mode():
+
+    for batch in valid_dataloader:
+
+      sent_id, attention_mask, labels = batch
+      sent_id, attention_mask, labels = sent_id.to(device), attention_mask.to(device), labels.to(device)
+
+      preds = model(sent_id, mask)
+
+      loss = loss_fn(preds.argmax(dim=1).type(torch.float), labels.type(torch.float))
+
+      loss_v += loss
+
+      acc = accuracy_fn(preds.argmax(dim=1), labels)
+
+      acc_v += acc
+
+      true_labels.expand(labels.cpu().numpy())
+      pred_labels.expand(labels.argmax(dim=1).cpu().numpy())
+
+    loss_v /= len(valid_dataloader)
+    acc_v /= len(valid_dataloader)
+
+    # Keep Metrics in Separated Lists
+  train_loss.append(loss_t.item())
+  train_acc.append(acc_t.item())
+  valid_loss.append(loss_v.item())
+  valid_acc.append(acc_v.item())
+
+  print(f"Train:\t Loss: {loss_t} | Accuracy: {acc_t} \nValid:\t Loss: {loss_v} | Accuracy {acc_v}")
+
+  # Create Confusion Matrix
+  cm = confusion_matrix(true_labels, pred_labels)
+  df_cm = pd.DataFrame(cm/np.sum(cm, axis=1),
+                    index=['Positive', 'Negative'],
+                    columns=['Positive', 'Negative'])
+
+  plt.Figure(figsize=(8, 8))
+  sn.heatmap(df_cm)
+  plt.savefig('/content/cm.png')
+  plt.close()
+
+
+```
 
 
 
