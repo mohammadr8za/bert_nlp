@@ -60,7 +60,9 @@ Embedding means transforming tokens into the numerical represenation for further
 
 ## 4. Fine-Tuning BERT for Sentiment Analysis/Classification
 
-In this section, we aim to utilize BERT, its pre-trained BASE version, for the task of sentiment analysis. We will use the abovementioned information, define a network with pretrained bert (from transformers library) as its core and fine-tune it for sentiment analysis/classification.  
+In this section, we aim to utilize BERT, its pre-trained BASE version, for the task of sentiment analysis. We will use the abovementioned information, define a network with pretrained bert (from transformers library) as its core and fine-tune it for sentiment analysis/classification. Let's code and detail each section if require. 
+
+
 
 
 
