@@ -7,6 +7,8 @@ BERT is the state of the art Embedding algorithm in Natural Language Processing 
 </p>
 Let's detail BERT.
 
+**NOTE:** BERT is named bidirectional, however, it is better to call it non-directional, because it uses transformer architecture that embedd each token according to all other tokens in the sequence without considering any specific order or direction. 
+
 ## 1. BERT Network
 
 ![elmo-eemmbeddings-(1)](https://github.com/mohammadr8za/bert_nlp/assets/72736177/20695649-c7f8-4e7b-9815-e46d00587c2f)
