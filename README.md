@@ -331,7 +331,7 @@ for epoch in range(Epochs):
     loss_v /= len(valid_dataloader)
     acc_v /= len(valid_dataloader)
 
-    # Keep Metrics in Separated Lists
+  # Keep Metrics in Separated Lists
   train_loss.append(loss_t.item())
   train_acc.append(acc_t.item())
   valid_loss.append(loss_v.item())
