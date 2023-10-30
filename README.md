@@ -117,7 +117,57 @@ plt.ylabel('Number of Text')
 ![histlength](https://github.com/mohammadr8za/bert_nlp/assets/72736177/6ddcd3da-6e4a-4217-b05b-2ee6c24fc1f7)
 
 
-## Step 4: Define a Custom Dataset
+
+## Step 4: Load BERT Model and its Tokenizer from *transformers* Library
+
+```
+!pip install transformers
+
+from transformers import AutoModel, BertTokenizerFast
+
+bert = AutoModel.from_pretrained('bert-base-uncased')
+tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
+
+```
+
+## Step 5: Define a Custom Dataset
+
+```
+from torch.utils.data import Dataset
+import pandas as pd
+import torch
+from transformers import BertTokenizerFast
+
+tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
+
+class BertCustomDataset(Dataset):
+
+  def __init__(self, path_csv_file, tokenizer, pad_len):
+    super(BertCustomDataset, self).__init__()
+
+    self.df = pd.read_csv(path_csv_file)
+
+    self.texts, self.labels = df['sentence'].tolist(), df['label'].tolist()
+
+    self.tokens = tokenizer.batch_encode_plus(self.texts,
+                                              max_length=pad_len,
+                                              pad_to_max_length=True,  # Pad short inputs to reach the fixed input size (pad_len)
+                                              truncation=True)  # truncate longer inputs to keep them in fixed input size (pad_len)
+
+  def __len__(self):
+    return len(self.texts)
+
+  def __getitem__(self, idx):
+
+    sent_id, mask = torch.tensor(self.tokens['input_ids'][idx]), torch.tensor(self.tokens['attention_mask'][idx])
+    label = torch.tensor(self.labels[idx])
+
+    return sent_id, mask, label
+
+```
+
+
+## Step 6: Define the BERT-Based Model
 
 ```
 import torch
@@ -156,19 +206,34 @@ class BERTArchitecture(nn.Module):
 ```
 
 
-## Step 5: Load BERT Model and its Tokenizer from *transformers* Library
+
+## Step 7: Define Datasets
 
 ```
-!pip install transformers
+train_dataset = BertCustomDataset(path_csv_file='/content/train.csv', tokenizer=tokenizer, pad_len=pad_len)
+valid_dataset = BertCustomDataset(path_csv_file='/content/valid.csv', tokenizer=tokenizer, pad_len=pad_len)
 
-from transformers import AutoModel, BertTokenizerFast
-
-bert = AutoModel.from_pretrained('bert-base-uncased')
-tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
+sent_id, mask, label = train_dataset[0]
+print(f"sentence ID: \t{sent_id}\nattention mask: \t{mask}\nlabel: \t{label}")
 
 ```
 
-## Step 6: Define Model
+## Step 8: Define DataLoaders
+
+```
+from torch.utils.data import DataLoader
+
+batch_size = 5
+
+train_dataloader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
+valid_dataloader = DataLoader(dataset=valid_dataset, batch_size=batch_size)
+
+batch, mask, labels = next(iter(train_dataloader))
+batch, mask, labels, len(train_dataloader)
+
+```
+
+
 
 
 
