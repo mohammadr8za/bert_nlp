@@ -8,7 +8,7 @@ BERT is the state of the art Embedding algorithm in Natural Language Processing 
 
 Let's detail BERT.
 
-## 1. BERT Network
+## 1. Network Architecture
 
 ![elmo-eemmbeddings-(1)](https://github.com/mohammadr8za/bert_nlp/assets/72736177/20695649-c7f8-4e7b-9815-e46d00587c2f)
 
@@ -42,6 +42,8 @@ In this step, after the provision of a list for each sentence, due to the incons
 
 **Q) Is there any particular scheme to find an approriate padding_len?** The answer is YES! You may shape a histogram of input lengths and consider a weighted average of input length as your initial padding_len. Then if necessary, you may modify the initial padding_len (Sample code is provided in this repo).  
 
+**Q) It is mentioned earlier that the network's input size (number of hidden units) is 512. What will happen to the rest of units when define a fixed input size (padding_len) less than 512?** The answer is straightforward: empty units will not be utilized! The network works with padding_len number of units!
+
 
 ### Attention Mask
 
@@ -50,6 +52,19 @@ BERT tokenizer also defines an attention mask. This mask aims to tell the networ
 
 
 ### Embedding
+
+Embedding means transforming tokens into the numerical represenation for further computations (feeding to the network). BERT first converts input tokens into IDs, as mentioned earlier. In the next step, these IDs are transformed into their corresponding dense vector representations (using pre-trained Word2Vec embeddings). Then inputs are ready to be utilized for any specific task.
+
+**NOTE:** Other than the <CLS> class token, there is another specific tokens <SEP> that separates sentences in the input sequence. Its existence improves the embedding results by letting network understand the ending and beginning of sentences in the input.
+
+
+## 3. Fine-Tuning BERT for Sentiment Analysis/Classification
+
+In this section, we aim to utilize BERT, its pre-trained BASE version, for the task of sentiment analysis. We will use the abovementioned information 
+
+
+
+
 
 
 
