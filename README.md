@@ -25,6 +25,7 @@ In the first step of every NLP project, raw text must be tokenized (splitted int
 </p>
 
 <p align="justify">
+  
 **"Hello, how are you?"**
 
 This sentence is splitted into words like this:
