@@ -108,8 +108,14 @@ import matplotlib.pyplot as plt
 
 train_len = [len(text.split()) for text in X_train]
 plt.hist(train_len)
+plt.title('Text Length Histogram')
+plt.xlabel('Text Length')
+plt.ylabel('Number of Text')
 
 ```
+
+![histlength](https://github.com/mohammadr8za/bert_nlp/assets/72736177/6ddcd3da-6e4a-4217-b05b-2ee6c24fc1f7)
+
 
 ## Step 4: Define a Custom Dataset
 
