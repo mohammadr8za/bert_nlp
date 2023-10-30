@@ -6,9 +6,12 @@ Let's detail BERT.
 
 ## 1. BERT Network
 
-BERT is an attention-based network introduced by Google researchers for the embedding task in Natural Language Processing. BERT is introduced in two particular versions, BASE and LARGE. The difference, as the names suggest is in the number of layers in the network architecture (network size). BASE version comprises 12 attention-based encoder layers, 512 hidden units and 12 attention heads. Its embedding dimension is 768 (110M parameters). However, BERT's LARGE version includes 24 attention-based encoder layers, with 512 hidden units and 16 attention head. Moreover, its embedding size in 1024 (345M parameters). In both versions, length of the input sequence is 512 (equal to the number of hidden units) and first token for both is the <CLS> that represents class token (it is stacked in the beginning of the input sequence). In the output, we get the embeddings of tokens and the class embedding that can be used for tasks like sentiment analysis which falls within classification. 
+![LGIlP](https://github.com/mohammadr8za/bert_nlp/assets/72736177/a7bcfd5f-6417-43ca-a260-961436741e04)
 
-**Q) How to train?** BERT is challenging to train. It is a large network with a lot of attention layers and susequqntly requires a large dataset. Text dataset are mainly challenging to be handled, too. So, it is always recommendded to utilize the pre-trained versions of BERT. In order to adopt BERT architecture and embeddings in any particular task, we may add layers in the output of this architecture and transfer its learned features to our specific task (freeze bert before the definition of our model and use it as the base of our architecture).  
+
+BERT is an attention-based network introduced by Google researchers for the embedding task in Natural Language Processing. BERT is introduced in two particular versions, BASE and LARGE. The difference, as the names suggest is in the number of layers in the network architecture (network size). BASE version comprises 12 attention-based encoder layers, 512 hidden units and 12 attention heads. Dimension of embedded tokens in the output is 768 (110M parameters). However, BERT's LARGE version includes 24 attention-based encoder layers, with 512 hidden units and 16 attention heads. Moreover, its embedding size in 1024 (345M parameters). In both versions, maximum length of the input sequence is 512 (equal to the number of hidden units) and first token for both is the <CLS> that represents class token (it is stacked in the beginning of the input sequence, and its embedded corresponding is the first embedded output). In the output, we get the embeddings of tokens and the class embedding that can be used for tasks like sentiment analysis which falls within classification, Q-A, and Named Entity Recognition (NER). 
+
+**Q) How to train?** BERT is challenging to train. It is a large network with a lot of attention encoder layers and subsequently requires a large dataset for training. Text datasets are mainly challenging to be handled, too, as they need to be specifically labeled for each task. So, it is always recommended to utilize the pre-trained versions of BERT. In order to adopt BERT architecture and embeddings in any particular task, we may add layers in the output of this architecture and transfer its learned features to our specific task (freeze bert before the definition of our model and use it as the core of our architecture).  
 
 ## 2. Tokenization: 
 
@@ -32,6 +35,9 @@ In this step, after the provision of a list for each sentence, due to the incons
 
 ### Attention Mask
 BERT tokenizer also defines an attention mask. This mask aims to tell the network (which is attention-based) which tokens to attend during the embedding process. This mask is a binary tensor of size padding_len (which is the fixed size for input tensors). This binary mask represents 1 for each input token and 0 if padded inputs. In fact, the network during embedding attends input tokens corresponding to 1 elements in binary attention mask and neglect those equivalent to 0 elements. 
+
+### Embedding
+
 
 
 
